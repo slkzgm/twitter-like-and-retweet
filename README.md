@@ -21,10 +21,11 @@ TWITTER_BEARER: "YOUR_BEARER"
 5: Edit the config.json file with your parameters:
 ```json
 {
-  "HASHTAGS": ["testing", "rtfkt"],
-  "RETWEET": true,
+  "HASHTAGS": ["hashtag1", "hashtag2", "hashtag3"],
+  "RETWEET": true
   "LIKE": false
 }
 ```
+set to true to enable auto like - retweet
 
 6: run the bot: `node .` or `node index.js`
