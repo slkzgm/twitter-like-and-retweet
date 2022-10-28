@@ -25,14 +25,18 @@ const deleteAllRules = async () => {
     const newRules = (await rwClient.v2.streamRules()).data;
     const stream = await rwClient.v2.searchStream();
 
-    console.log(`Connected with rules:${JSON.stringify(newRules)}`)
+    console.log(`Connected with rules:${JSON.stringify(newRules.map(rule => rule.value))}`)
     stream.on(ETwitterStreamEvent.Data, async (data) => {
       const tweet = data.data;
 
-      await BotInteractions.retweet(tweet.id);
-      if (config.LIKE)
+      if (config.RETWEET) {
+        await BotInteractions.retweet(tweet.id);
+        console.log(`Tweet #${tweet.id} retweeted.`);
+      }
+      if (config.LIKE) {
         await BotInteractions.like(tweet.id);
-      console.log(`Tweet #${tweet.id} retweeted${config.LIKE ? ' and liked.' : '.'}`);
+        console.log(`Tweet #${tweet.id} liked.`);
+      }
     });
     stream.on(ETwitterStreamEvent.DataKeepAlive, () => console.log('.. still up!'));
     stream.autoReconnect = true;
