@@ -1,7 +1,7 @@
 # twitter-like-and-retweet
 Automatically like and/or retweet desired twitter #HASHTAGS.
 
-# how to run:
+# how to run
 
 1: Clone the repo and make sure to have Node installed
 
@@ -29,3 +29,8 @@ TWITTER_BEARER: "YOUR_BEARER"
 set to true to enable auto like - retweet
 
 6: run the bot: `node .` or `node index.js`
+
+
+## F.A.Q
+If you can listen to events but have errors msg when liking and/or retweeting, make sure that your app is registered with read AND write permissions!
+![image](https://user-images.githubusercontent.com/105301169/198827588-be2ab5a0-8a66-4606-8d1a-e42dbd216bf5.png)
