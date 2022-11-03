@@ -1,5 +1,5 @@
 # twitter-like-and-retweet
-Automatically like and/or retweet desired twitter #HASHTAGS.
+Automatically like and/or retweet desired twitter #HASHTAGS and/or Users.
 
 # how to run
 
