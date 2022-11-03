@@ -3,7 +3,8 @@ const {rwClient} = require('./client.js');
 const BotInteractions = require('./interactions');
 const config = require('./config.json');
 
-const rules = config.HASHTAGS.map(hashtag => {return {'value': `#${hashtag} -is:retweet`}});
+const rules = config.HASHTAGS.map(hashtag => {return {'value': `#${hashtag} -is:retweet`}}).concat(config.USERS.map(user => {return {'value': `from:${user}`}}));
+console.log(rules);
 
 const deleteAllRules = async () => {
   try {
