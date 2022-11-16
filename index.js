@@ -3,8 +3,17 @@ const {rwClient} = require('./client.js');
 const BotInteractions = require('./interactions');
 const config = require('./config.json');
 
-const rules = config.HASHTAGS.map(hashtag => {return {'value': `#${hashtag} -is:retweet`}}).concat(config.USERS.map(user => {return {'value': `from:${user}`}}));
-console.log(rules);
+const rules = config.HASHTAGS
+  .map(hashtag => {
+    return {
+      'value': `#${hashtag} -is:retweet`,
+      'tag': `#${hashtag}`}
+  })
+  .concat(config.USERS.map(user => {
+    return {
+      'value': `from:${user} -is:retweet`,
+      'tag': `@${user}`}
+  }));
 
 const deleteAllRules = async () => {
   try {
@@ -29,7 +38,11 @@ const deleteAllRules = async () => {
     console.log(`Connected with rules:${JSON.stringify(newRules.map(rule => rule.value))}`)
     stream.on(ETwitterStreamEvent.Data, async (data) => {
       const tweet = data.data;
+      const matchingRule = data.matching_rules[0];
 
+      // Avoid acting on replies that not include the hashtags themself
+      if (matchingRule.tag[0] === '#' && !tweet.text.match(matchingRule.tag))
+        return ;
       if (config.RETWEET) {
         await BotInteractions.retweet(tweet.id);
         console.log(`Tweet #${tweet.id} retweeted.`);
